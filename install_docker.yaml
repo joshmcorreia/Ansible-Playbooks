@@ -1,0 +1,14 @@
+# ansible-playbook -i inventory.yaml --ask-become-pass install_docker.yaml
+
+- name: Install docker
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.docker
+  tasks:
+
+  - name: Add josh user to docker group
+    ansible.builtin.user:
+      name: josh
+      groups: docker
+      append: yes
