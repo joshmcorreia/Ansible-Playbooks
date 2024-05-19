@@ -1,0 +1,10 @@
+# ansible-playbook -i inventory.yaml apt_update_and_upgrade.yaml --ask-become-pass
+
+- name: Update and upgrade apt packages
+  hosts: ungrouped
+  tasks:
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
