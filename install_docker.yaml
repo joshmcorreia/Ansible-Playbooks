@@ -1,5 +1,7 @@
 # ansible-playbook -i inventory.yaml --ask-become-pass install_docker.yaml
 
+# Before running: `ansible-galaxy role install geerlingguy.docker`
+
 - name: Install docker
   hosts: all
   become: true
