@@ -1,0 +1,10 @@
+# ansible-playbook -i inventory.yaml --ask-become-pass install_node_exporter.yaml
+
+# Before running: `ansible-galaxy role install geerlingguy.node_exporter`
+
+- name: Install Node exporter
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.node_exporter
+  tasks:
