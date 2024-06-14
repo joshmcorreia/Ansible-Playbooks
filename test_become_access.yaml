@@ -1,0 +1,9 @@
+# ansible-playbook test_become_access.yaml --ask-vault-pass
+
+- name: Update and upgrade apt packages
+  hosts: all
+  tasks:
+  - name: Test become access
+    become: true
+    command: echo ""
+    changed_when: false
