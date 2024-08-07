@@ -9,6 +9,13 @@
       name: zsh
       state: present
 
+  # needed for tracking how long commands take
+  - name: Install bc
+    become: true
+    ansible.builtin.package:
+      name: bc
+      state: present
+
   - name: Create the `josh` user
     become: true
     ansible.builtin.user:
