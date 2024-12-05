@@ -1,0 +1,35 @@
+# ansible-playbook -i inventory.yaml set_up_terminal.yaml --ask-become-pass
+
+# Before running: `ansible-galaxy role install andrewrothstein.starship`
+
+- name: Install starship
+  hosts: ungrouped
+  become: true
+  roles:
+    - andrewrothstein.starship
+  vars:
+    username: josh
+  tasks:
+    - name: Download .zshrc to the user's home directory
+      become: true
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/joshmcorreia/configs/refs/heads/main/.zshrc
+        dest: "/home/{{ username }}/.zshrc"
+        mode: '0644'
+        owner: "{{ username }}"
+        group: "{{ username }}"
+    - name: Create the .config directory
+      ansible.builtin.file:
+        path: "/home/{{ username }}/.config/"
+        state: directory
+        mode: '0700'
+        owner: "{{ username }}"
+        group: "{{ username }}"
+    - name: Download starship.toml to the user's home directory
+      become: true
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/joshmcorreia/configs/refs/heads/main/starship.toml
+        dest: "/home/{{ username }}/.config/starship.toml"
+        mode: '0644'
+        owner: "{{ username }}"
+        group: "{{ username }}"
