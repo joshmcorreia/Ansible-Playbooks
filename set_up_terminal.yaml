@@ -2,7 +2,7 @@
 
 # Before running: `ansible-galaxy role install andrewrothstein.starship`
 
-- name: Install starship
+- name: Set up terminal
   hosts: ungrouped
   become: true
   roles:
@@ -18,6 +18,7 @@
         mode: '0644'
         owner: "{{ username }}"
         group: "{{ username }}"
+
     - name: Create the .config directory
       ansible.builtin.file:
         path: "/home/{{ username }}/.config/"
@@ -25,11 +26,29 @@
         mode: '0700'
         owner: "{{ username }}"
         group: "{{ username }}"
+
     - name: Download starship.toml to the user's home directory
       become: true
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/joshmcorreia/configs/refs/heads/main/starship.toml
         dest: "/home/{{ username }}/.config/starship.toml"
+        mode: '0644'
+        owner: "{{ username }}"
+        group: "{{ username }}"
+
+    # Set up Zellij configs
+    - name: Create the zellij directory
+      ansible.builtin.file:
+        path: "/home/{{ username }}/.config/zellij"
+        state: directory
+        mode: '0755'
+        owner: "{{ username }}"
+        group: "{{ username }}"
+    - name: Download zellij config.kdl to the user's home directory
+      become: true
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/joshmcorreia/configs/refs/heads/main/.config/zellij/config.kdl
+        dest: "/home/{{ username }}/.config/zellij/config.kdl"
         mode: '0644'
         owner: "{{ username }}"
         group: "{{ username }}"
